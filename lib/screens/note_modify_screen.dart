@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
 class NoteModifyScreen extends StatelessWidget {
+  final String id;
+  NoteModifyScreen({this.id});
+  bool get isEditing => id != null;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Note'),
+        title: Text(isEditing ? 'Update Note' : 'Create Note'),
         centerTitle: true,
       ),
       body: Padding(

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:green_note/models/note_model.dart';
+import 'package:green_note/screens/note_modify_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final notes = [
@@ -48,29 +49,34 @@ class HomeScreen extends StatelessWidget {
       body: ListView.builder(
           itemCount: notes.length,
           itemBuilder: (BuildContext context, index) {
-            return Container(
-              decoration: BoxDecoration(color: Colors.white),
-              padding: EdgeInsets.all(16.0),
-              margin: EdgeInsets.symmetric(horizontal: 0.0, vertical: 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    notes[index].title,
-                    style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green[600]),
-                  ),
-                  SizedBox(
-                    height: 16.0,
-                  ),
-                  Text(
-                    'Last edited on: ${formattedDateTime(notes[index].editedAt)}',
-                    style:
-                        TextStyle(fontSize: 14.0, fontWeight: FontWeight.w200),
-                  ),
-                ],
+            return GestureDetector(
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => NoteModifyScreen(id: notes[index].id,))
+              ),
+              child: Container(
+                decoration: BoxDecoration(color: Colors.white),
+                padding: EdgeInsets.all(16.0),
+                margin: EdgeInsets.symmetric(horizontal: 0.0, vertical: 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      notes[index].title,
+                      style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green[600]),
+                    ),
+                    SizedBox(
+                      height: 16.0,
+                    ),
+                    Text(
+                      'Last edited on: ${formattedDateTime(notes[index].editedAt)}',
+                      style: TextStyle(
+                          fontSize: 14.0, fontWeight: FontWeight.w200),
+                    ),
+                  ],
+                ),
               ),
             );
           }),
