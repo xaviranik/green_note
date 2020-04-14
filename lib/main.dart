@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:green_note/screens/home_screen.dart';
+import 'package:green_note/screens/note_modify_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +15,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
         fontFamily: 'Nunito',
       ),
-      home: Home(),
+      home: HomeScreen(),
+      routes: {
+        '/note_modify' : (context) => NoteModifyScreen()
+      },
     );
   }
 }
