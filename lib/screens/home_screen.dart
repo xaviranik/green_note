@@ -1,39 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:green_note/models/note_model.dart';
 import 'package:green_note/screens/note_modify_screen.dart';
+import 'package:green_note/services/note_service.dart';
 import 'package:green_note/widgets/note_delete_pop_up_widget.dart';
 
-class HomeScreen extends StatelessWidget {
-  final notes = [
-    Note(
-      id: '1',
-      title: 'My awesome note 1',
-      createdAt: DateTime.now(),
-      editedAt: DateTime.now(),
-    ),
-    Note(
-      id: '2',
-      title: 'My awesome note 2',
-      createdAt: DateTime.now(),
-      editedAt: DateTime.now(),
-    ),
-    Note(
-      id: '3',
-      title: 'My awesome note 3',
-      createdAt: DateTime.now(),
-      editedAt: DateTime.now(),
-    ),
-    Note(
-      id: '4',
-      title: 'My awesome note 4',
-      createdAt: DateTime.now(),
-      editedAt: DateTime.now(),
-    ),
-  ];
+class HomeScreen extends StatefulWidget {
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  NoteService get service => GetIt.I<NoteService>();
+  List<Note> notes = [];
 
   String formattedDateTime(DateTime dateTime) {
     return '${dateTime.day}/${dateTime.month}/${dateTime.year}';
+  }
+
+  @override
+  void initState() {
+    notes = service.getNoteList();
+    super.initState();
   }
 
   @override

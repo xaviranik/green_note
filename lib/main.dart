@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:green_note/screens/home_screen.dart';
 import 'package:green_note/screens/note_modify_screen.dart';
+import 'package:green_note/services/note_service.dart';
 
-void main() => runApp(MyApp());
+void setupLocator() {
+  GetIt.instance.registerLazySingleton(() => NoteService());
+}
+
+void main() {
+  setupLocator();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
