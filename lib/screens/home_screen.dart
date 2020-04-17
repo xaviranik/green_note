@@ -48,7 +48,9 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, '/note_modify'),
+        onPressed: () => Navigator.pushNamed(context, '/note_modify').then((_) {
+          _fetchNotes();
+        }),
         child: Icon(Icons.add),
       ),
       body: Builder(

@@ -7,8 +7,8 @@ class Note {
   DateTime createdAt;
   DateTime editedAt;
 
-  factory Note.fromJson({Map<String, dynamic> item, int flag}) {
-    if(flag == 1) {
+  factory Note.fromJson({Map<String, dynamic> item, String flag}) {
+    if(flag == 'SINGLE') {
       return Note.single(
         id: item['noteID'],
         content: item['noteContent'],
@@ -25,6 +25,11 @@ class Note {
     );
   }
 
+  Note.create({
+    @required this.title,
+    @required this.content
+  });
+
   Note.all({
     @required this.id,
     @required this.title,
@@ -39,4 +44,11 @@ class Note {
     @required this.createdAt,
     @required this.editedAt
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      "noteTitle" : title,
+      "noteContent" : content
+    };
+  }
 }

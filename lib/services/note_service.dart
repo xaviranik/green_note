@@ -9,6 +9,7 @@ class NoteService {
   static const API = 'http://api.notes.programmingaddict.com';
   static const headers = {
     'apiKey' : '64fcf854-ee5c-4ef3-8bbf-088e66faa6fb',
+    'Content-Type' : 'application/json'
   };
 
   Future<ApiResponse<List<Note>>> getAllNotes() {
@@ -41,7 +42,7 @@ class NoteService {
         .then((data) {
       if(data.statusCode == 200) {
         final Map jsonData = json.decode(data.body);
-        final note = Note.fromJson(item: jsonData, flag: 1);
+        final note = Note.fromJson(item: jsonData, flag: 'SINGLE');
         return ApiResponse<Note>(
             data: note
         );
@@ -52,6 +53,27 @@ class NoteService {
       );
     }).catchError((_) {
       return ApiResponse<Note>(
+          error: true,
+          errorMessage: 'An error occured'
+      );
+    });
+  }
+
+  Future<ApiResponse<bool>> createNote(Note item) {
+    return http.post(API + '/notes', headers: headers, body: json.encode(item.toMap()))
+        .then((data) {
+          print(data.body);
+      if(data.statusCode == 201) {
+        return ApiResponse<bool>(
+            data: true
+        );
+      }
+      return ApiResponse<bool>(
+          error: true,
+          errorMessage: 'An error occured'
+      );
+    }).catchError((_) {
+      return ApiResponse<bool>(
           error: true,
           errorMessage: 'An error occured'
       );
