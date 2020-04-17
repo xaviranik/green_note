@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _isLoading = true;
     });
 
-    _apiResponse = await service.getNotes();
+    _apiResponse = await service.getAllNotes();
 
     setState(() {
       _isLoading = false;
