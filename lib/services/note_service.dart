@@ -79,4 +79,24 @@ class NoteService {
       );
     });
   }
+
+  Future<ApiResponse<bool>> updateNote(Note item) {
+    return http.put(API + '/notes/' + item.id, headers: headers, body: json.encode(item.toMap()))
+        .then((data) {
+      if(data.statusCode == 204) {
+        return ApiResponse<bool>(
+            data: true
+        );
+      }
+      return ApiResponse<bool>(
+          error: true,
+          errorMessage: 'An error occured'
+      );
+    }).catchError((_) {
+      return ApiResponse<bool>(
+          error: true,
+          errorMessage: 'An error occured'
+      );
+    });
+  }
 }

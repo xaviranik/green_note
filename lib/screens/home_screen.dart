@@ -13,7 +13,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   NoteService get service => GetIt.I<NoteService>();
   ApiResponse<List<Note>> _apiResponse;
   bool _isLoading = false;
@@ -67,10 +66,14 @@ class _HomeScreenState extends State<HomeScreen> {
               itemCount: _apiResponse.data.length,
               itemBuilder: (BuildContext context, index) {
                 return GestureDetector(
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => NoteModifyScreen(
-                            id: _apiResponse.data[index].id,
-                          ))),
+                  onTap: () => Navigator.of(context)
+                      .push(MaterialPageRoute(
+                          builder: (_) => NoteModifyScreen(
+                                id: _apiResponse.data[index].id,
+                              )))
+                      .then((_) {
+                    _fetchNotes();
+                  }),
                   child: Dismissible(
                     key: ValueKey(_apiResponse.data[index].id),
                     direction: DismissDirection.startToEnd,

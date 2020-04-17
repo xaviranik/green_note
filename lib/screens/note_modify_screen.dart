@@ -52,25 +52,50 @@ class _NoteModifyScreenState extends State<NoteModifyScreen> {
     setState(() {
       _isLoading = false;
     });
+
     if(!response.error) {
-      showDialog(
-          context: context,
-          builder: (_) => AlertDialog(
-            title: Text('Note Added'),
-            content: Text('Your note has been added successfully!'),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Ok'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          )
-      ).then((data) {
-        Navigator.of(context).pop();
-      });
+      _showAlert(title: 'Note Added', content: 'Your note has been added successfully!');
     }
+  }
+
+  void _updateNote() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    final note = Note.update(
+        id: widget.id,
+        title: _titleController.text,
+        content: _contentController.text
+    );
+    final response = await service.updateNote(note);
+
+    setState(() {
+      _isLoading = false;
+    });
+    if(!response.error) {
+      _showAlert(title: 'Note Updated', content: 'Your note has been updated successfully!');
+    }
+  }
+
+  void _showAlert({String title, String content}) {
+    showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text(title),
+          content: Text(content),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        )
+    ).then((data) {
+      Navigator.of(context).pop();
+    });
   }
 
   @override
@@ -117,7 +142,7 @@ class _NoteModifyScreenState extends State<NoteModifyScreen> {
                   child: RaisedButton(
                     onPressed: () {
                       if (_isEditing) {
-                        // TODO: Update note
+                        _updateNote();
                       } else {
                         _createNote();
                       }

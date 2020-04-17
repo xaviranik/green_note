@@ -45,6 +45,12 @@ class Note {
     @required this.editedAt
   });
 
+  Note.update({
+    @required this.id,
+    @required this.title,
+    @required this.content
+  });
+
   Map<String, dynamic> toMap() {
     return {
       "noteTitle" : title,
