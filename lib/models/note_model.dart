@@ -51,6 +51,10 @@ class Note {
     @required this.content
   });
 
+  Note.delete({
+    @required this.id,
+  });
+
   Map<String, dynamic> toMap() {
     return {
       "noteTitle" : title,

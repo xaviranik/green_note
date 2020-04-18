@@ -99,4 +99,24 @@ class NoteService {
       );
     });
   }
+
+  Future<ApiResponse<bool>> deleteNote(Note item) {
+    return http.delete(API + '/notes/' + item.id, headers: headers)
+        .then((data) {
+      if(data.statusCode == 204) {
+        return ApiResponse<bool>(
+            data: true
+        );
+      }
+      return ApiResponse<bool>(
+          error: true,
+          errorMessage: 'An error occured'
+      );
+    }).catchError((_) {
+      return ApiResponse<bool>(
+          error: true,
+          errorMessage: 'An error occured'
+      );
+    });
+  }
 }

@@ -79,8 +79,33 @@ class _HomeScreenState extends State<HomeScreen> {
                     direction: DismissDirection.startToEnd,
                     onDismissed: (direction) {},
                     confirmDismiss: (direction) async {
+                      var message = '';
                       final result = await showDialog(
                           context: context, builder: (_) => NoteDeletePopup());
+
+                      if(result) {
+                        final deleteResult = await service.deleteNote(Note.delete(id: _apiResponse.data[index].id));
+                        if(deleteResult != null && deleteResult.data == true) {
+                          message = 'The note was deleted successfully!';
+                        } else {
+                          message = 'An error occured!';
+                        }
+                        showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                            title: Text('Alert'),
+                            content: Text(message),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text('Ok'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          )
+                        );
+                      }
                       return result;
                     },
                     background: Container(
